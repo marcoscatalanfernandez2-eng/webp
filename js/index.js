@@ -128,68 +128,70 @@ function abrirFinca(id) {
 
 let inicioX = 0;
 let inicioY = 0;
+let moviendoHorizontal = false;
+let moviendoVertical = false;
 
-let moviendo = false;
-
-document.addEventListener("touchstart", function(e){
+document.addEventListener("touchstart", function (e) {
 
     const img = e.target.closest("img[id^='img-']");
 
-    if(!img) return;
+    if (!img) return;
 
     inicioX = e.touches[0].clientX;
     inicioY = e.touches[0].clientY;
 
-    moviendo = false;
+    moviendoHorizontal = false;
+    moviendoVertical = false;
 
 });
 
-document.addEventListener("touchmove", function(e){
+document.addEventListener("touchmove", function (e) {
 
     const img = e.target.closest("img[id^='img-']");
 
-    if(!img) return;
+    if (!img) return;
 
     const dx = e.touches[0].clientX - inicioX;
     const dy = e.touches[0].clientY - inicioY;
 
-    // Si el dedo se ha movido más de 10px en cualquier dirección,
-    // ya no es un toque.
-    if(Math.abs(dx) > 10 || Math.abs(dy) > 10){
-        moviendo = true;
+    // decidir dirección dominante
+    if (Math.abs(dx) > Math.abs(dy)) {
+        moviendoHorizontal = Math.abs(dx) > 10;
+    } else {
+        moviendoVertical = Math.abs(dy) > 10;
     }
 
 });
 
-document.addEventListener("touchend", function(e){
+document.addEventListener("touchend", function (e) {
 
     const img = e.target.closest("img[id^='img-']");
 
-    if(!img) return;
+    if (!img) return;
 
     const dx = e.changedTouches[0].clientX - inicioX;
     const dy = e.changedTouches[0].clientY - inicioY;
 
     const id = parseInt(img.dataset.id);
 
-    // Solo cambiamos foto si el gesto ha sido principalmente horizontal
-    if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)){
+    // 🚫 Si fue scroll vertical → no hacer nada
+    if (moviendoVertical) {
+        return;
+    }
 
-        if(dx < 0){
-            cambiarImagen(null,id,1);
-        }else{
-            cambiarImagen(null,id,-1);
+    // 👉 Si fue swipe horizontal
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+
+        if (dx < 0) {
+            cambiarImagen(null, id, 1);
+        } else {
+            cambiarImagen(null, id, -1);
         }
 
         return;
     }
 
-    // Si ha habido movimiento (scroll o gesto), no abrir la finca
-    if(moviendo){
-        return;
-    }
-
-    // Solo si realmente ha sido un toque
+    // 👉 solo click real
     abrirFinca(id);
 
 });
