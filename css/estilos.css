@@ -100,11 +100,11 @@ font-size:18px;
 
 display:grid;
 
-grid-template-columns:repeat(auto-fit,minmax(3,1fr));
+grid-template-columns:repeat(3,1fr);
 
-gap:35px;
-
-margin-top:40px;
+gap:30px;
+max-width:1200px;
+margin:40px auto;
 
 }
 
