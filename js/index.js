@@ -28,7 +28,7 @@ function mostrarFincas(lista){
                 <img
                     id="img-${finca.id}"
                     src="${finca.imagenes[0]}"
-                    onclick="abrirFinca(${finca.id})"
+                    data-id="${finca.id}"
                 >
 
                 <button class="flecha derecha"
@@ -87,7 +87,9 @@ document.getElementById("mostrarTodas").onclick = function () {
 
 function cambiarImagen(event, id, direccion) {
 
+    if(event){
     event.stopPropagation();
+    }
 
     const finca = fincas.find(f => f.id === id);
 
@@ -121,3 +123,71 @@ function cambiarImagen(event, id, direccion) {
 function abrirFinca(id) {
     location.href = "finca.html?id=" + id;
 }
+
+// ---------------- GESTOS TÁCTILES ----------------
+
+let inicioX = 0;
+let inicioY = 0;
+let moviendo = false;
+
+document.addEventListener("touchstart", function(e){
+
+    const img = e.target.closest("img[id^='img-']");
+
+    if(!img) return;
+
+    inicioX = e.touches[0].clientX;
+    inicioY = e.touches[0].clientY;
+
+    moviendo = false;
+
+});
+
+document.addEventListener("touchmove", function(e){
+
+    const img = e.target.closest("img[id^='img-']");
+
+    if(!img) return;
+
+    const dx = e.touches[0].clientX - inicioX;
+    const dy = e.touches[0].clientY - inicioY;
+
+    if(Math.abs(dx) > 15 && Math.abs(dx) > Math.abs(dy)){
+        moviendo = true;
+    }
+
+});
+
+document.addEventListener("touchend", function(e){
+
+    const img = e.target.closest("img[id^='img-']");
+
+    if(!img) return;
+
+    const finX = e.changedTouches[0].clientX;
+
+    const diferencia = finX - inicioX;
+
+    const id = parseInt(img.dataset.id);
+
+    if(moviendo){
+
+        if(diferencia < -50){
+
+            cambiarImagen(null,id,1);
+
+        }
+        else if(diferencia > 50){
+
+            cambiarImagen(null,id,-1);
+
+        }
+
+    }
+    else{
+
+        abrirFinca(id);
+
+    }
+
+});
