@@ -355,11 +355,7 @@ nav{
 
 }
 
-}
-
-@media (max-width: 768px){
-
-    .flecha{
+ .flecha{
 
         opacity:1 !important;
 
@@ -369,6 +365,8 @@ nav{
 
         justify-content:center;
 
-    }
+}
+    
 
 }
+
