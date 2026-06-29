@@ -128,6 +128,7 @@ function abrirFinca(id) {
 
 let inicioX = 0;
 let inicioY = 0;
+
 let moviendo = false;
 
 document.addEventListener("touchstart", function(e){
@@ -152,7 +153,9 @@ document.addEventListener("touchmove", function(e){
     const dx = e.touches[0].clientX - inicioX;
     const dy = e.touches[0].clientY - inicioY;
 
-    if(Math.abs(dx) > 15 && Math.abs(dx) > Math.abs(dy)){
+    // Si el dedo se ha movido más de 10px en cualquier dirección,
+    // ya no es un toque.
+    if(Math.abs(dx) > 10 || Math.abs(dy) > 10){
         moviendo = true;
     }
 
@@ -164,30 +167,29 @@ document.addEventListener("touchend", function(e){
 
     if(!img) return;
 
-    const finX = e.changedTouches[0].clientX;
-
-    const diferencia = finX - inicioX;
+    const dx = e.changedTouches[0].clientX - inicioX;
+    const dy = e.changedTouches[0].clientY - inicioY;
 
     const id = parseInt(img.dataset.id);
 
-    if(moviendo){
+    // Solo cambiamos foto si el gesto ha sido principalmente horizontal
+    if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)){
 
-        if(diferencia < -50){
-
+        if(dx < 0){
             cambiarImagen(null,id,1);
-
-        }
-        else if(diferencia > 50){
-
+        }else{
             cambiarImagen(null,id,-1);
-
         }
 
+        return;
     }
-    else{
 
-        abrirFinca(id);
-
+    // Si ha habido movimiento (scroll o gesto), no abrir la finca
+    if(moviendo){
+        return;
     }
+
+    // Solo si realmente ha sido un toque
+    abrirFinca(id);
 
 });
