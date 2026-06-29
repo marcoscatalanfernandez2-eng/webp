@@ -356,3 +356,19 @@ nav{
 }
 
 }
+
+@media (max-width: 768px){
+
+    .flecha{
+
+        opacity:1 !important;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+    }
+
+}
