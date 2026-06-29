@@ -4,23 +4,55 @@ function mostrarFincas(lista){
 
     contenedor.innerHTML="";
 
-    lista.forEach(finca=>{
+    lista.forEach((finca,index)=>{
 
-        contenedor.innerHTML += `
+        let puntos="";
+
+        finca.imagenes.forEach((img,i)=>{
+
+            puntos+=`<span class="dot ${i==0?"activo":""}"></span>`;
+
+        });
+
+        contenedor.innerHTML+=`
 
         <div class="card">
 
-            <img src="${finca.imagenes[0]}">
+            <div class="slider">
+
+                <button class="flecha izquierda"
+                    onclick="cambiarImagen(event,${index},-1)">
+                    ❮
+                </button>
+
+                <img
+                    id="imagen-${index}"
+                    src="${finca.imagenes[0]}"
+                    onclick="abrirFinca(${finca.id})"
+                >
+
+                <button class="flecha derecha"
+                    onclick="cambiarImagen(event,${index},1)">
+                    ❯
+                </button>
+
+                <div class="favorito">❤</div>
+
+                <div class="puntos" id="puntos-${index}">
+                    ${puntos}
+                </div>
+
+            </div>
 
             <div class="info">
 
                 <h3>${finca.titulo}</h3>
 
-                <p>${finca.municipio}</p>
+                <p>${finca.municipio}, ${finca.provincia}</p>
 
                 <p>${finca.metros} m²</p>
 
-                <p>${finca.precio} €/mes</p>
+                <strong>${finca.precio} €/mes</strong>
 
             </div>
 
@@ -32,38 +64,46 @@ function mostrarFincas(lista){
 
 }
 
-mostrarFincas(
-    fincas.filter(f=>f.destacada).slice(0,6)
-);
+const imagenActual={};
 
-document
-.getElementById("busqueda")
-.addEventListener("input",function(){
+fincas.forEach((f,i)=>{
 
-    const texto=this.value.toLowerCase();
-
-    const resultado=fincas.filter(f=>
-
-        f.comunidad.toLowerCase().includes(texto)
-
-        ||
-
-        f.provincia.toLowerCase().includes(texto)
-
-        ||
-
-        f.municipio.toLowerCase().includes(texto)
-
-    );
-
-    mostrarFincas(resultado);
+    imagenActual[i]=0;
 
 });
 
-document
-.getElementById("mostrarTodas")
-.onclick=function(){
+function cambiarImagen(event,indice,direccion){
 
-    location.href="todas.html";
+    event.stopPropagation();
+
+    const finca=fincas[indice];
+
+    imagenActual[indice]+=direccion;
+
+    if(imagenActual[indice]<0)
+
+        imagenActual[indice]=finca.imagenes.length-1;
+
+    if(imagenActual[indice]>=finca.imagenes.length)
+
+        imagenActual[indice]=0;
+
+    document.getElementById("imagen-"+indice).src=
+
+        finca.imagenes[imagenActual[indice]];
+
+    const dots=document
+        .getElementById("puntos-"+indice)
+        .children;
+
+    [...dots].forEach(d=>d.classList.remove("activo"));
+
+    dots[imagenActual[indice]].classList.add("activo");
+
+}
+
+function abrirFinca(id){
+
+    location.href="finca.html?id="+id;
 
 }
