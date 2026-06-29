@@ -35,9 +35,27 @@ margin-left:20px;
 
 .hero{
 
-padding:70px;
-text-align:center;
-background:white;
+height:70vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    color:white;
+
+    background:
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    url("../imagenes/fondo.jpg");
+
+    background-size:cover;
+
+    background-position:center;
 
 }
 
