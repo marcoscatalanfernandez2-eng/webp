@@ -18,7 +18,7 @@ function mostrarFincas(lista){
 
         <div class="card">
 
-            <div class="slider">
+            <div class="slider" data-id="${finca.id}">
 
                 <button class="flecha izquierda"
                     onclick="cambiarImagen(event, ${finca.id}, -1)">
@@ -126,72 +126,62 @@ function abrirFinca(id) {
 
 // ---------------- GESTOS TÁCTILES ----------------
 
-let inicioX = 0;
-let inicioY = 0;
-let moviendoHorizontal = false;
-let moviendoVertical = false;
+document.addEventListener("DOMContentLoaded", () => {
 
-document.addEventListener("touchstart", function (e) {
+    const sliders = document.querySelectorAll(".slider");
 
-    const img = e.target.closest("img[id^='img-']");
+    sliders.forEach(slider => {
 
-    if (!img) return;
+        let inicioX = 0;
+        let inicioY = 0;
+        let moved = false;
 
-    inicioX = e.touches[0].clientX;
-    inicioY = e.touches[0].clientY;
+        const id = parseInt(slider.dataset.id);
 
-    moviendoHorizontal = false;
-    moviendoVertical = false;
+        slider.addEventListener("touchstart", (e) => {
 
-});
+            inicioX = e.touches[0].clientX;
+            inicioY = e.touches[0].clientY;
 
-document.addEventListener("touchmove", function (e) {
+            moved = false;
 
-    const img = e.target.closest("img[id^='img-']");
+        }, { passive: true });
 
-    if (!img) return;
+        slider.addEventListener("touchmove", (e) => {
 
-    const dx = e.touches[0].clientX - inicioX;
-    const dy = e.touches[0].clientY - inicioY;
+            const dx = e.touches[0].clientX - inicioX;
+            const dy = e.touches[0].clientY - inicioY;
 
-    // decidir dirección dominante
-    if (Math.abs(dx) > Math.abs(dy)) {
-        moviendoHorizontal = Math.abs(dx) > 10;
-    } else {
-        moviendoVertical = Math.abs(dy) > 10;
-    }
+            if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
+                moved = true;
+            }
 
-});
+        }, { passive: true });
 
-document.addEventListener("touchend", function (e) {
+        slider.addEventListener("touchend", (e) => {
 
-    const img = e.target.closest("img[id^='img-']");
+            const dx = e.changedTouches[0].clientX - inicioX;
+            const dy = e.changedTouches[0].clientY - inicioY;
 
-    if (!img) return;
+            // 👉 SWIPE HORIZONTAL
+            if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
 
-    const dx = e.changedTouches[0].clientX - inicioX;
-    const dy = e.changedTouches[0].clientY - inicioY;
+                if (dx < 0) {
+                    cambiarImagen(null, id, 1);
+                } else {
+                    cambiarImagen(null, id, -1);
+                }
 
-    const id = parseInt(img.dataset.id);
+                return;
+            }
 
-    // 🚫 Si fue scroll vertical → no hacer nada
-    if (moviendoVertical) {
-        return;
-    }
+            // 👉 CLICK REAL (solo si NO hubo movimiento)
+            if (!moved) {
+                abrirFinca(id);
+            }
 
-    // 👉 Si fue swipe horizontal
-    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+        });
 
-        if (dx < 0) {
-            cambiarImagen(null, id, 1);
-        } else {
-            cambiarImagen(null, id, -1);
-        }
-
-        return;
-    }
-
-    // 👉 solo click real
-    abrirFinca(id);
+    });
 
 });
