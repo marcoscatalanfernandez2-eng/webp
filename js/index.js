@@ -1,44 +1,44 @@
 const contenedor = document.getElementById("contenedorFincas");
 
+const estadoImagen = {};
+
 function mostrarFincas(lista){
 
-    contenedor.innerHTML="";
+    contenedor.innerHTML = "";
 
-    lista.forEach((finca,index)=>{
+    lista.forEach(finca => {
 
-        let puntos="";
+        let puntos = "";
 
-        finca.imagenes.forEach((img,i)=>{
-
-            puntos+=`<span class="dot ${i==0?"activo":""}"></span>`;
-
+        finca.imagenes.forEach((img, i) => {
+            puntos += `<span class="dot ${i === 0 ? "activo" : ""}"></span>`;
         });
 
-        contenedor.innerHTML+=`
+        contenedor.innerHTML += `
 
         <div class="card">
 
             <div class="slider">
 
                 <button class="flecha izquierda"
-                    onclick="cambiarImagen(event,${index},-1)">
+                    onclick="cambiarImagen(event, ${finca.id}, -1)">
                     ❮
                 </button>
 
                 <img
-                    id="imagen-${index}"
+                    id="img-${finca.id}"
                     src="${finca.imagenes[0]}"
                     onclick="abrirFinca(${finca.id})"
                 >
 
                 <button class="flecha derecha"
-                    onclick="cambiarImagen(event,${index},1)">
+                    onclick="cambiarImagen(event, ${finca.id}, 1)">
                     ❯
                 </button>
 
                 <div class="favorito">❤</div>
 
-                <div class="puntos" id="puntos-${index}">
+                <div class="puntos" id="dots-${finca.id}">
                     ${puntos}
                 </div>
 
@@ -47,11 +47,8 @@ function mostrarFincas(lista){
             <div class="info">
 
                 <h3>${finca.titulo}</h3>
-
                 <p>${finca.municipio}, ${finca.provincia}</p>
-
                 <p>${finca.metros} m²</p>
-
                 <strong>${finca.precio} €/mes</strong>
 
             </div>
@@ -64,46 +61,63 @@ function mostrarFincas(lista){
 
 }
 
-const imagenActual={};
+mostrarFincas(
+    fincas.filter(f => f.destacada).slice(0, 6)
+);
 
-fincas.forEach((f,i)=>{
+document.getElementById("busqueda").addEventListener("input", function () {
 
-    imagenActual[i]=0;
+    const texto = this.value.toLowerCase();
+
+    const resultado = fincas.filter(f =>
+
+        f.comunidad.toLowerCase().includes(texto) ||
+        f.provincia.toLowerCase().includes(texto) ||
+        f.municipio.toLowerCase().includes(texto)
+
+    );
+
+    mostrarFincas(resultado);
 
 });
 
-function cambiarImagen(event,indice,direccion){
+document.getElementById("mostrarTodas").onclick = function () {
+    location.href = "todas.html";
+};
+
+function cambiarImagen(event, id, direccion) {
 
     event.stopPropagation();
 
-    const finca=fincas[indice];
+    const finca = fincas.find(f => f.id === id);
 
-    imagenActual[indice]+=direccion;
+    if (!estadoImagen[id]) {
+        estadoImagen[id] = 0;
+    }
 
-    if(imagenActual[indice]<0)
+    estadoImagen[id] += direccion;
 
-        imagenActual[indice]=finca.imagenes.length-1;
+    if (estadoImagen[id] < 0) {
+        estadoImagen[id] = finca.imagenes.length - 1;
+    }
 
-    if(imagenActual[indice]>=finca.imagenes.length)
+    if (estadoImagen[id] >= finca.imagenes.length) {
+        estadoImagen[id] = 0;
+    }
 
-        imagenActual[indice]=0;
+    document.getElementById("img-" + id).src =
+        finca.imagenes[estadoImagen[id]];
 
-    document.getElementById("imagen-"+indice).src=
-
-        finca.imagenes[imagenActual[indice]];
-
-    const dots=document
-        .getElementById("puntos-"+indice)
+    const dots = document
+        .getElementById("dots-" + id)
         .children;
 
-    [...dots].forEach(d=>d.classList.remove("activo"));
+    [...dots].forEach(d => d.classList.remove("activo"));
 
-    dots[imagenActual[indice]].classList.add("activo");
+    dots[estadoImagen[id]].classList.add("activo");
 
 }
 
-function abrirFinca(id){
-
-    location.href="finca.html?id="+id;
-
+function abrirFinca(id) {
+    location.href = "finca.html?id=" + id;
 }
