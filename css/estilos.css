@@ -369,4 +369,11 @@ nav{
     
 
 }
+.slider img{
 
+    user-select:none;
+    -webkit-user-drag:none;
+
+    touch-action:pan-y;
+
+}
