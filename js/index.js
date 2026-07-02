@@ -61,9 +61,28 @@ function mostrarFincas(lista){
 
 }
 
+function activarClicks() {
+
+    document.querySelectorAll("img[id^='img-']").forEach(img => {
+
+        img.addEventListener("click", function () {
+
+            // En móviles no hacemos nada porque lo controla touchend
+            if ("ontouchstart" in window) return;
+
+            abrirFinca(parseInt(this.dataset.id));
+
+        });
+
+    });
+
+}
+
 mostrarFincas(
     fincas.filter(f => f.destacada).slice(0, 6)
 );
+
+activarClicks();
 
 document.getElementById("busqueda").addEventListener("input", function () {
 
@@ -78,8 +97,9 @@ document.getElementById("busqueda").addEventListener("input", function () {
     );
 
     mostrarFincas(resultado);
-
+    activarClicks();
 });
+
 
 document.getElementById("mostrarTodas").onclick = function () {
     location.href = "todas.html";
