@@ -8,10 +8,17 @@ const fincas = [
     municipio:"Tudela",
 
     precio:120,
-
     metros:500,
-
+    
     destacada:true,
+
+    telefono:"600123123",
+    email:"info@parcelas.es",
+
+    ubicacion:{
+        lat:42.1769356,
+        lng:-1.7542404
+    }
 
     imagenes:[
         "imagenes/finca1/1.jpg",
@@ -28,10 +35,17 @@ const fincas = [
     municipio:"Corella",
 
     precio:90,
-
     metros:600,
 
     destacada:true,
+
+    telefono:"600123123",
+    email:"info@parcelas.es",
+
+    ubicacion:{
+        lat:42.1769356,
+        lng:-1.7542404
+    }
 
     imagenes:[
         "imagenes/finca2/1.jpg",
@@ -47,10 +61,17 @@ const fincas = [
     municipio:"Alfaro",
 
     precio:150,
-
     metros:700,
 
     destacada:true,
+
+    telefono:"600123123",
+    email:"info@parcelas.es",
+
+    ubicacion:{
+        lat:42.1769356,
+        lng:-1.7542404
+    }
 
     imagenes:[
         "imagenes/finca3/1.jpg"
@@ -65,10 +86,17 @@ const fincas = [
     municipio:"Tauste",
 
     precio:100,
-
     metros:800,
 
     destacada:true,
+
+    telefono:"600123123",
+    email:"info@parcelas.es",
+
+    ubicacion:{
+        lat:42.1769356,
+        lng:-1.7542404
+    }
 
     imagenes:[
         "imagenes/finca4/1.jpg"
@@ -83,10 +111,17 @@ const fincas = [
     municipio:"Cintruénigo",
 
     precio:110,
-
     metros:450,
 
     destacada:true,
+
+    telefono:"600123123",
+    email:"info@parcelas.es",
+
+    ubicacion:{
+        lat:42.1769356,
+        lng:-1.7542404
+    }
 
     imagenes:[
         "imagenes/finca5/1.jpg"
@@ -101,10 +136,17 @@ const fincas = [
     municipio:"Cascante",
 
     precio:130,
-
     metros:1000,
 
     destacada:true,
+
+    telefono:"600123123",
+    email:"info@parcelas.es",
+
+    ubicacion:{
+        lat:42.1769356,
+        lng:-1.7542404
+    }
 
     imagenes:[
         "imagenes/finca6/1.jpg"
