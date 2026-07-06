@@ -7,6 +7,17 @@ const id = parseInt(params.get("id"));
 // buscar finca
 const finca = fincas.find(f => f.id === id);
 
+const mapa = `
+<iframe
+    width="100%"
+    height="400"
+    style="border:0;border-radius:15px"
+    loading="lazy"
+    allowfullscreen
+    src="https://www.google.com/maps?q=${finca.ubicacion.lat},${finca.ubicacion.lng}&z=16&output=embed">
+</iframe>
+`;
+
 if (!finca) {
 
     contenedor.innerHTML = "<h2>Finca no encontrada</h2>";
