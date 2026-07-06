@@ -4,9 +4,6 @@ const contenedor = document.getElementById("contenedorFinca");
 const params = new URLSearchParams(window.location.search);
 const id = parseInt(params.get("id"));
 
-// buscar finca
-const finca = fincas.find(f => f.id === id);
-
 const mapa = `
 <iframe
     width="100%"
@@ -18,6 +15,9 @@ const mapa = `
 </iframe>
 `;
 
+
+// buscar finca
+const finca = fincas.find(f => f.id === id);
 if (!finca) {
 
     contenedor.innerHTML = "<h2>Finca no encontrada</h2>";
