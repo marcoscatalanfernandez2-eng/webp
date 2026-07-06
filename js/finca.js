@@ -4,18 +4,6 @@ const contenedor = document.getElementById("contenedorFinca");
 const params = new URLSearchParams(window.location.search);
 const id = parseInt(params.get("id"));
 
-const mapa = `
-<iframe
-    width="100%"
-    height="400"
-    style="border:0;border-radius:15px"
-    loading="lazy"
-    allowfullscreen
-    src="https://www.google.com/maps?q=${finca.ubicacion.lat},${finca.ubicacion.lng}&z=16&output=embed">
-</iframe>
-`;
-
-
 // buscar finca
 const finca = fincas.find(f => f.id === id);
 if (!finca) {
@@ -29,6 +17,17 @@ if (!finca) {
     finca.imagenes.forEach(img => {
         galeria += `<img src="${img}" class="img-finca">`;
     });
+
+    const mapa = `
+<iframe
+    width="100%"
+    height="400"
+    style="border:0;border-radius:15px"
+    loading="lazy"
+    allowfullscreen
+    src="https://www.google.com/maps?q=${finca.ubicacion.lat},${finca.ubicacion.lng}&z=16&output=embed">
+</iframe>
+`;
 
     contenedor.innerHTML = `
 
