@@ -52,6 +52,14 @@ if (!finca) {
 
             </div>
 
+            <div class="mapa">
+
+                <h3>Ubicación</h3>
+
+                ${mapa}
+
+            </div>
+
             <div class="contacto">
 
                 <a href="tel:600123123" class="btn">
