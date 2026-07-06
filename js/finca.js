@@ -62,12 +62,12 @@ if (!finca) {
 
             <div class="contacto">
 
-                <a href="tel:600123123" class="btn">
-                    📞 Llamar
-                </a>
+                <a href="tel:${finca.telefono}" class="btn">
+                    📞 ${finca.telefono}
+                </a>        
 
-                <a href="mailto:contacto@parcelas.es" class="btn">
-                    ✉️ Email
+                <a href="mailto:${finca.email}" class="btn">
+                    ✉️ ${finca.email}
                 </a>
 
             </div>
