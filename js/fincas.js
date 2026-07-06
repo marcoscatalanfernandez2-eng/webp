@@ -18,7 +18,7 @@ const fincas = [
     ubicacion:{
         lat:42.1769356,
         lng:-1.7542404
-    }
+    },
 
     imagenes:[
         "imagenes/finca1/1.jpg",
