@@ -45,7 +45,7 @@ const fincas = [
     ubicacion:{
         lat:42.1769356,
         lng:-1.7542404
-    }
+    },
 
     imagenes:[
         "imagenes/finca2/1.jpg",
@@ -71,7 +71,7 @@ const fincas = [
     ubicacion:{
         lat:42.1769356,
         lng:-1.7542404
-    }
+    },
 
     imagenes:[
         "imagenes/finca3/1.jpg"
@@ -96,7 +96,7 @@ const fincas = [
     ubicacion:{
         lat:42.1769356,
         lng:-1.7542404
-    }
+    },
 
     imagenes:[
         "imagenes/finca4/1.jpg"
@@ -121,7 +121,7 @@ const fincas = [
     ubicacion:{
         lat:42.1769356,
         lng:-1.7542404
-    }
+    },
 
     imagenes:[
         "imagenes/finca5/1.jpg"
@@ -146,7 +146,7 @@ const fincas = [
     ubicacion:{
         lat:42.1769356,
         lng:-1.7542404
-    }
+    },
 
     imagenes:[
         "imagenes/finca6/1.jpg"
