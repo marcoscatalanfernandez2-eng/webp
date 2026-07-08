@@ -74,7 +74,7 @@ const fincas = [
     },
 
     imagenes:[
-        "imagenes/finca3/1.jpg"
+        "imagenes/finca3/3.jpg"
     ]
 },
 
@@ -151,6 +151,31 @@ const fincas = [
     imagenes:[
         "imagenes/finca6/1.jpg"
     ]
-}
+},
+
+{
+    id:7,
+    titulo:"Parcela en Alfaro",
+    comunidad:"La Rioja",
+    provincia:"La Rioja",
+    municipio:"Alfaro",
+
+    precio:150,
+    metros:700,
+
+    destacada:true,
+
+    telefono:"600123123",
+    email:"info@parcelas.es",
+
+    ubicacion:{
+        lat:42.1769356,
+        lng:-1.7542404
+    },
+
+    imagenes:[
+        "imagenes/finca3/3.jpg"
+    ]
+},
 
 ];
