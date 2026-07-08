@@ -1,6 +1,27 @@
 const contenedor = document.getElementById("contenedorFincas");
+let mostrandoTodas = false;
 
 const estadoImagen = {};
+
+function actualizarFincas() {
+
+    const texto = document.getElementById("busqueda").value.toLowerCase();
+
+    let lista = fincas.filter(f =>
+
+        f.comunidad.toLowerCase().includes(texto) ||
+        f.provincia.toLowerCase().includes(texto) ||
+        f.municipio.toLowerCase().includes(texto)
+
+    );
+
+    if (!mostrandoTodas) {
+        lista = lista.filter(f => f.destacada).slice(0, 6);
+    }
+
+    mostrarFincas(lista);
+
+}
 
 function mostrarFincas(lista){
 
@@ -78,31 +99,20 @@ function activarClicks() {
 
 }
 
-mostrarFincas(
-    fincas.filter(f => f.destacada).slice(0, 6)
-);
+actualizarFincas();
 
 activarClicks();
 
-document.getElementById("busqueda").addEventListener("input", function () {
-
-    const texto = this.value.toLowerCase();
-
-    const resultado = fincas.filter(f =>
-
-        f.comunidad.toLowerCase().includes(texto) ||
-        f.provincia.toLowerCase().includes(texto) ||
-        f.municipio.toLowerCase().includes(texto)
-
-    );
-
-    mostrarFincas(resultado);
-    activarClicks();
-});
-
+document.getElementById("busqueda").addEventListener("input", actualizarFincas);
 
 document.getElementById("mostrarTodas").onclick = function () {
-    location.href = "todas.html";
+
+    mostrandoTodas = !mostrandoTodas;
+    this.textContent = mostrandoTodas
+        ? "Mostrar destacadas"
+        : "Mostrar todas";
+    actualizarFincas();
+
 };
 
 function cambiarImagen(event, id, direccion) {
